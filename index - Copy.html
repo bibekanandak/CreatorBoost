@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CreatorBoost • Social Growth & Rewards</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #131a2b;
+      --card-2: #1a233a;
+      --border: #26324d;
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      --accent: #10b981;
+      --gold: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #050811;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Mobile App Container */
+    .app-shell {
+      width: 100%;
+      max-width: 460px;
+      background: var(--bg);
+      min-height: 100vh;
+      position: relative;
+      padding-bottom: 85px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #818cf8, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.3px;
+    }
+
+    .logout-btn {
+      background: var(--card-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Auth Screen */
+    .auth-box {
+      padding: 28px 20px;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #1e1b4b, #064e3b);
+      border: 1px solid #3730a3;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .hero-banner h1 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .hero-banner p {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #a7f3d0;
+    }
+
+    /* Forms & Inputs */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+      margin-top: 10px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0b0f19;
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .switch-link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .switch-link span {
+      color: #818cf8;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Wallet Grid */
+    .content {
+      padding: 14px 16px;
+    }
+
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .wallet-card {
+      background: linear-gradient(145deg, #161f35, #111727);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .wallet-card.paid {
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .w-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .w-val {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 4px 0;
+      color: #34d399;
+    }
+
+    .wallet-card.paid .w-val {
+      color: var(--gold);
+    }
+
+    .w-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Streak Bar */
+    .streak-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: var(--bg);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #10b981);
+      width: 0%;
+      transition: 0.4s;
+    }
+
+    /* Task Cards */
+    .task-item {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .task-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      margin-bottom: 6px;
+    }
+
+    .task-reward {
+      float: right;
+      font-size: 12px;
+      font-weight: 800;
+      color: #34d399;
+    }
+
+    .task-desc {
+      font-size: 13px;
+      color: #e2e8f0;
+      margin: 6px 0 10px;
+      line-height: 1.4;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 460px;
+      background: rgba(19, 26, 43, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 4px 12px;
+      z-index: 30;
+    }
+
+    .nav-item {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .nav-item span.icon {
+      font-size: 18px;
+    }
+
+    .nav-item.active {
+      color: #818cf8;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .alert {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #a7f3d0;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .ref-box {
+      background: var(--bg);
+      border: 1px dashed var(--primary);
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      word-break: break-all;
+      color: #a5b4fc;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="brand">⚡ CreatorBoost</div>
+    <button id="logoutBtn" class="logout-btn hidden" onclick="logoutUser()">Logout</button>
+  </div>
+
+  <!-- AUTH SECTION -->
+  <div id="authSection" class="auth-box">
+    <div class="hero-banner">
+      <h1>Free Insta Views & Likes 🚀</h1>
+      <p>Real creators ko support karein, points kamayein aur apni Instagram reels boost karein.</p>
+      <div class="badge-row">
+        <span class="pill">🎁 1,000 Instagram views Joining Bonus</span>
+        <span class="pill">🔥 2,000 Instagram views / Task</span>
+        <span class="pill">🤝 50k Instagram views / Refer</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" id="authTitle">Create Free Account</div>
+      <div id="refNotice" class="alert hidden">🎉 Referral Applied! 1st task poora karte hi 1,000 Bonus Points milenge.</div>
+
+      <div id="signupFields">
+        <label>Aapka Naam</label>
+        <input type="text" id="regName" placeholder="e.g. Rahul Sharma" />
+
+        <label>WhatsApp Number</label>
+        <input type="tel" id="regPhone" placeholder="e.g. 9876543210" />
+      </div>
+
+      <label>Email Address</label>
+      <input type="email" id="authEmail" placeholder="name@gmail.com" />
+
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="Min 6 characters" />
+
+      <button class="btn btn-primary" id="authSubmitBtn" onclick="handleAuth()">Sign Up For Free Views</button>
+		<div style="text-align:right; margin-top:8px;">
+        <span onclick="resetPassword()" style="font-size:12px; color:#94a3b8; cursor:pointer; text-decoration:underline;">
+          Forgot Password?
+        </span>
+      </div>
+      <div class="switch-link" id="toggleAuthText">
+        Already have an account? <span onclick="toggleAuthMode()">Login here</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP SECTION -->
+  <div id="mainApp" class="content hidden">
+
+    <!-- Dual Wallets (Always Visible on Top) -->
+    <div class="wallet-grid">
+      <div class="wallet-card">
+        <div class="w-label">Reward Points</div>
+        <div class="w-val" id="rewardPtsDisplay">0</div>
+        <div class="w-sub">For Insta Views & Likes</div>
+      </div>
+      <div class="wallet-card paid">
+        <div class="w-label">Paid Ad Credits</div>
+        <div class="w-val" id="paidPtsDisplay">0</div>
+        <div class="w-sub">For Posting Your Tasks</div>
+      </div>
+    </div>
+
+    <!-- TAB 1: EARN TASKS -->
+    <div id="tab-tasks">
+      <div class="streak-box">
+        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+          <span>🔥 7-Day Streak Bonus (+10,000 Pts)</span>
+          <span id="streakText">0 / 7 Days</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="streakBar"></div>
+        </div>
+        <div style="font-size:11px; color:var(--muted);">
+          Rule: Video poora dekhein + Like + 3-4 words ka topic comment karein.
+        </div>
+      </div>
+
+      <div class="card-title">📋 Available Tasks</div>
+      <div id="taskListContainer">
+        <p style="font-size:13px; color:var(--muted);">Loading tasks...</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: INSTA BOOST STORE -->
+    <div id="tab-store" class="hidden">
+      <div class="card">
+        <div class="card-title">🚀 Insta Boost Store</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">
+          Apne Reward Points ya Paid Ad Credits se Instagram Reel Views ya Likes order karein. (Note: Show-off boost, delivery 1-12 hrs).
+        </p>
+
+        <label>Select Service</label>
+        <select id="storeService" onchange="calcStoreCost()">
+          <option value="views">Instagram Reel Views (100 Pts = 100 Views)</option>
+          <option value="likes">Instagram Post/Reel Likes (3,000 Pts = 100 Likes)</option>
+        </select>
+
+        <label>Quantity (Views min 500 | Likes min 100)</label>
+        <input type="number" id="storeQty" value="1000" min="100" step="100" oninput="calcStoreCost()" />
+
+        <label>Instagram Reel / Post Link</label>
+        <input type="url" id="storeLink" placeholder="https://www.instagram.com/reel/..." />
+
+        <label>Payment Wallet</label>
+        <select id="storeWallet" onchange="calcStoreCost()">
+          <option value="rewardPoints">🎁 Reward Points (Free Task Earnings)</option>
+          <option value="paidCredits">💳 Paid Ad Credits (Purchased via UPI)</option>
+        </select>
+
+        <div style="margin-top:12px; font-size:13px; font-weight:700; color:#34d399;">
+          Total Cost: <span id="storeCostPreview">1,000</span> <span id="storeCurrencyLabel">Reward Points</span>
+        </div>
+
+        <button class="btn btn-green" onclick="placeStoreOrder()">🚀 Place Boost Order</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📦 My Recent Orders</div>
+        <div id="myOrdersList" style="font-size:12px; color:var(--muted);">No orders yet.</div>
+      </div>
+    </div>
+
+    <!-- TAB 3: POST TASK & BUY CREDITS -->
+    <div id="tab-promote" class="hidden">
+      <!-- Post Task using Paid Credits -->
+      <div class="card">
+        <div class="card-title">📢 Post Your Video Task</div>
+        <p style="font-size:12px; color:var(--muted);">
+          Real comments aur full watch pane ke liye Paid Ad Credits use karein.
+        </p>
+
+        <label>Platform</label>
+        <select id="newTaskPlatform">
+          <option value="YouTube Video">YouTube Long Video</option>
+          <option value="Facebook Reel">Facebook Reel</option>
+          <option value="Instagram Reel">Instagram Reel</option>
+        </select>
+
+        <label>Video Link</label>
+        <input type="url" id="newTaskUrl" placeholder="Paste your video link here" />
+
+        <label>Task Instructions</label>
+        <input type="text" id="newTaskDesc" value="Watch full video + Like + Topic related comment" />
+
+        <label>Points Per User (Min 1,000 Pts)</label>
+        <input type="number" id="newTaskReward" value="2000" min="1000" step="500" />
+
+        <label>Total Users Needed (Quantity)</label>
+        <input type="number" id="newTaskCount" value="10" min="1" />
+
+        <button class="btn" disabled style="background:#334155; color:#94a3b8; cursor:not-allowed; opacity:0.8;">🔒 Coming Soon (100 Users Milestone)</button>
+      </div>
+
+      <!-- Buy Paid Credits -->
+      <div class="card" style="border-color: rgba(245, 158, 11, 0.5);">
+        <div class="card-title" style="color:var(--gold);">💳 Buy Paid Ad Credits</div>
+        <p style="font-size:12px; color:#e2e8f0; line-height:1.5;">
+          Minimum <b>₹50 = 50,000 Paid Credits</b>.<br>
+          UPI ID: <b style="color:#34d399;" id="adminUpiDisplay">yourupi@okaxis</b>
+        </p>
+
+        <label>Amount Paid (Min ₹50)</label>
+        <input type="number" id="buyAmount" value="50" min="50" step="50" />
+
+        <label>12-Digit UPI UTR / Ref Number</label>
+        <input type="text" id="buyUtr" placeholder="e.g. 632819402811" />
+
+        <button class="btn btn-gold" onclick="submitPaymentRequest()">Submit Payment Proof</button>
+      </div>
+    </div>
+
+    <!-- TAB 4: REFER & EARN -->
+    <div id="tab-refer" class="hidden">
+      <div class="card">
+        <div class="card-title">🤝 Refer & Earn 50,000 Points</div>
+        <p style="font-size:12px; color:#cbd5e1; line-height:1.5;">
+          • Dost ke 1st task approve hote hi: <b>+1,000 Reward Points</b><br>
+          • Dost ke 7-day streak poora karte hi: <b>+49,000 Extra Points</b>
+        </p>
+
+        <label>Your Unique Referral Link</label>
+        <div class="ref-box" id="myRefLink">Generating...</div>
+
+        <button class="btn btn-green" onclick="copyRefLink()">📋 Copy & Share on WhatsApp</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 Your Referral Stats</div>
+        <div style="font-size:13px; line-height:1.8;">
+          Total Invited Friends: <b id="refTotalCount">0</b><br>
+          7-Day Completed Friends: <b id="refVerifiedCount" style="color:#34d399;">0</b>
+        </div>
+      </div>
+    </div>
+	<!-- TAB: USER PROFILE -->
+    <div id="tab-profile" class="hidden">
+      <div class="card">
+        <h3 style="margin-bottom:10px; color:#34d399;">👤 Meri Profile</h3>
+        <div style="font-size:13px; line-height:1.9; color:#cbd5e1;">
+          <div><b>Naam:</b> <span id="profName">-</span></div>
+          <div><b>WhatsApp:</b> <span id="profPhone">-</span></div>
+          <div><b>Email:</b> <span id="profEmail">-</span></div>
+          <div><b>Reward Points:</b> <span id="profReward" style="color:#34d399; font-weight:700;">0</span></div>
+          <div><b>Paid Ad Credits:</b> <span id="profPaid" style="color:#fbbf24; font-weight:700;">0</span></div>
+          <div><b>Current Streak:</b> <span id="profStreak" style="color:#818cf8; font-weight:700;">0 / 7 Days</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:10px; font-size:15px;">📋 Meri Task History</h3>
+        <div id="profTaskHistory" style="font-size:12px; color:#94a3b8;">Loading...</div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:10px; font-size:15px;">💳 Payment & Order History</h3>
+        <div id="profPayHistory" style="font-size:12px; color:#94a3b8;">Loading...</div>
+      </div>
+    </div>
+    <!-- TAB 5: SECRET ADMIN PANEL -->
+    <div id="tab-admin" class="hidden">
+	<div class="card" style="display:flex; justify-content:space-between; text-align:center;">
+        <div><div class="w-label">Total Users</div><div class="w-val" id="adminTotalUsers">0</div></div>
+        <div><div class="w-label">Active Tasks</div><div class="w-val" id="adminActiveTasks" style="color:#818cf8;">0</div></div>
+      </div>
+      <div class="card" style="border-color: var(--danger);">
+        <div class="card-title" style="color:#fca5a5;">🛡️ Admin Control Panel</div>
+
+        <label>Post Official Admin Task (Free for Admin)</label>
+        <select id="admPlatform">
+          <option value="YouTube Video">YouTube Video</option>
+          <option value="Facebook Reel">Facebook Reel</option>
+        </select>
+        <input type="url" id="admUrl" placeholder="Your YT/FB Video Link" style="margin-top:8px;" />
+        <input type="text" id="admDesc" value="Full Watch + Like + Meaningful Topic Comment" style="margin-top:8px;" />
+        <input type="number" id="admReward" value="2000" style="margin-top:8px;" />
+        <button class="btn btn-primary btn-sm" onclick="postAdminTask()">+ Publish Admin Task</button>
+      </div>
+	
+	  <div class="card">
+        <div class="card-title">🎬 Pending User Campaigns (Ad Approvals)</div>
+        <div id="adminPendingCampaigns" style="font-size:12px;">No pending user campaigns.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">⏳ Pending Task Approvals</div>
+        <div id="adminPendingTasks" style="font-size:12px;">No pending tasks.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💰 Pending UPI Payments</div>
+        <div id="adminPendingPayments" style="font-size:12px;">No pending payments.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🚀 Pending Insta Boost Orders</div>
+        <div id="adminPendingOrders" style="font-size:12px;">No pending orders.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div id="bottomNav" class="bottom-nav hidden">
+    <button class="nav-item active" onclick="switchTab('tasks', this)">
+      <span class="icon">🎯</span><span>Tasks</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('store', this)">
+      <span class="icon">🚀</span><span>Boost</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('promote', this)">
+      <span class="icon">📢</span><span>Promote</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('refer', this)">
+      <span class="icon">🤝</span><span>Refer</span>
+    </button>
+	<button class="nav-item" id="nav-profile" onclick="switchTab('profile', this)">
+        <span style="font-size:18px;">👤</span>
+        <span>Profile</span>
+     </button>
+    <button id="adminNavBtn" class="nav-item hidden" onclick="switchTab('admin', this)">
+      <span class="icon">🛡️</span><span>Admin</span>
+    </button>
+  </div>
+</div>
+
+<!-- Firebase Compat SDKs (Works both on Local Browser & Live Hosting) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  // ==========================================
+  // 1. APNA FIREBASE CONFIG & ADMIN DETAILS YAHAN DALEN
+  // ==========================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZMM6Ua7Iz9uJaF7X56JdOS6IVc3sNPhE",
+    authDomain: "creatorboost-da94c.firebaseapp.com",
+    projectId: "creatorboost-da94c",
+    storageBucket: "creatorboost-da94c.firebasestorage.app",
+    messagingSenderId: "618197344531",
+    appId: "1:618197344531:web:b4659683cf13778dfc7ae6",
+    measurementId: "G-2TZ50C04CN"
+  };
+
+  const ADMIN_EMAIL = "XXXXXXXXX@gmail.com"; // Apni Gmail ID yahan likhen
+  const ADMIN_WHATSAPP = "XXXXXXXXX"; // Apna WhatsApp number (91 ke saath)
+  const ADMIN_UPI = "XXXXXXX@upi"; // Apna UPI ID
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  document.getElementById("adminUpiDisplay").innerText = ADMIN_UPI;
+
+  let isSignup = true;
+  let currentUser = null;
+  let currentUserData = null;
+
+  // Capture Referral ID from URL (?ref=UID)
+  const urlParams = new URLSearchParams(window.location.search);
+  const refParam = urlParams.get("ref");
+  if (refParam) {
+    localStorage.setItem("cb_ref", refParam);
+    document.getElementById("refNotice").classList.remove("hidden");
+  }
+
+  function toggleAuthMode() {
+    isSignup = !isSignup;
+    document.getElementById("authTitle").innerText = isSignup ? "Create Free Account" : "Welcome Back (Login)";
+    document.getElementById("signupFields").classList.toggle("hidden", !isSignup);
+    document.getElementById("authSubmitBtn").innerText = isSignup ? "Sign Up & Start Earning" : "Login";
+    document.getElementById("toggleAuthText").innerHTML = isSignup
+      ? 'Already have an account? <span onclick="toggleAuthMode()">Login here</span>'
+      : 'New user? <span onclick="toggleAuthMode()">Create account</span>';
+  }
+async function handleAuth() {
+    const email = document.getElementById("authEmail").value.trim();
+    const pass = document.getElementById("authPass").value.trim();
+    if (!email || !pass) return alert("Email aur Password bharein.");
+
+    try {
+      if (isSignup) {
+        const name = document.getElementById("regName").value.trim();
+        // Spaces ya +91 hatakar sirf digits nikalein
+        const rawPhone = document.getElementById("regPhone").value.replace(/\D/g, "");
+        const phone = rawPhone.length === 12 && rawPhone.startsWith("91") ? rawPhone.slice(2) : rawPhone;
+
+        // 1. Name Validation (Min 3 letters, only alphabets & spaces)
+        if (!/^[a-zA-Z\s]{3,35}$/.test(name)) {
+          return alert("Kripya apna asli naam likhein (kam se kam 3 akshar, bina numbers ke).");
+        }
+
+        // 2. Indian 10-Digit Mobile Validation & Fake Repeated Digit Block
+        if (!/^[6-9]\d{9}$/.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+          return alert("Kripya sahi 10-digit Indian WhatsApp number dalein (e.g. 9876543210).");
+        }
+
+        // 3. Check Duplicate WhatsApp Number (Ek number = Ek account)
+        const existingPhone = await db.collection("users").where("phone", "==", phone).get();
+        if (!existingPhone.empty) {
+          return alert("Yeh WhatsApp number pehle se registered hai! Kripya Login karein.");
+        }
+
+        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+        const referredBy = localStorage.getItem("cb_ref") || null;
+
+        await db.collection("users").doc(cred.user.uid).set({
+          name,
+          phone,
+          email,
+          rewardPoints: 0,
+          paidCredits: 0,
+          streak: 0,
+          joiningBonusPaid: false,
+          referredBy: referredBy !== cred.user.uid ? referredBy : null,
+          ref1kPaid: false,
+          ref49kPaid: false,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } else {
+        await auth.signInWithEmailAndPassword(email, pass);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+async function resetPassword() {
+    const email = document.getElementById("authEmail").value.trim();
+    if (!email) {
+      return alert("Pehle upar wale box mein apna registered Email Address likhein, phir Forgot Password par click karein.");
+    }
+    try {
+      await auth.sendPasswordResetEmail(email);
+      alert("Password reset link aapki Email (" + email + ") par bhej diya gaya hai! (Inbox ya Spam folder check karein).");
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+  function logoutUser() {
+    auth.signOut();
+  }
+
+  // Auth State Listener
+  auth.onAuthStateChanged(async (user) => {
+  
+    if (user) {
+      currentUser = user;
+      document.getElementById("authSection").classList.add("hidden");
+      document.getElementById("mainApp").classList.remove("hidden");
+      document.getElementById("bottomNav").classList.remove("hidden");
+      document.getElementById("logoutBtn").classList.remove("hidden");
+
+      if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+        document.getElementById("adminNavBtn").classList.remove("hidden");
+        loadAdminData();
+      } else {
+        document.getElementById("adminNavBtn").classList.add("hidden");
+        document.getElementById("tab-admin").classList.add("hidden");
+      }
+
+      // Generate Referral Link
+      const baseUrl = window.location.origin + window.location.pathname;
+      document.getElementById("myRefLink").innerText = `${baseUrl}?ref=${user.uid}`;
+
+      // Listen to User Profile
+      db.collection("users").doc(user.uid).onSnapshot((doc) => {
+        if (doc.exists) {
+          currentUserData = doc.data();
+          document.getElementById("rewardPtsDisplay").innerText = (currentUserData.rewardPoints || 0).toLocaleString();
+          document.getElementById("paidPtsDisplay").innerText = (currentUserData.paidCredits || 0).toLocaleString();
+
+          const st = currentUserData.streak || 0;
+          document.getElementById("streakText").innerText = `${st % 7} / 7 Days`;
+          document.getElementById("streakBar").style.width = `${((st % 7) / 7) * 100}%`;
+        }
+      });
+
+      loadTasks();
+      loadMyOrders();
+      loadReferralStats();
+	  loadProfileHistory();
+    } else {
+      currentUser = null;
+      document.getElementById("authSection").classList.remove("hidden");
+      document.getElementById("mainApp").classList.add("hidden");
+      document.getElementById("bottomNav").classList.add("hidden");
+      document.getElementById("logoutBtn").classList.add("hidden");
+    }
+  });
+	// Load User Profile Details, Task History & Payment History
+  function loadProfileHistory() {
+    if (!currentUser) return;
+
+    // 1. Live User Info
+    db.collection("users").doc(currentUser.uid).onSnapshot((doc) => {
+      if (!doc.exists) return;
+      const d = doc.data();
+      document.getElementById("profName").innerText = d.name || "-";
+      document.getElementById("profPhone").innerText = d.phone || "-";
+      document.getElementById("profEmail").innerText = d.email || currentUser.email || "-";
+      document.getElementById("profReward").innerText = (d.rewardPoints || 0).toLocaleString();
+      document.getElementById("profPaid").innerText = (d.paidCredits || 0).toLocaleString();
+      document.getElementById("profStreak").innerText = `${(d.streak || 0) % 7} / 7 Days`;
+    });
+
+    // 2. Task Submission History
+    db.collection("submissions").where("userId", "==", currentUser.uid).onSnapshot((snap) => {
+      const box = document.getElementById("profTaskHistory");
+      if (snap.empty) {
+        box.innerHTML = "Abhi tak koi task submit nahi kiya hai.";
+        return;
+      }
+      let html = "";
+      snap.forEach((doc) => {
+        const s = doc.data();
+        const badgeColor = s.status === "approved" ? "#34d399" : (s.status === "rejected" ? "#f87171" : "#fbbf24");
+        html += `
+          <div style="padding:8px 0; border-bottom:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <b style="color:#e2e8f0;">${s.platform ? s.platform.toUpperCase() : "TASK"}</b> (+${s.reward || 0} Pts)<br>
+			  <span style="font-size:11px; color:#94a3b8;">Comment: "${s.commentText || s.comment || "-"}"</span>
+            </div>
+            <span style="color:${badgeColor}; font-weight:700; text-transform:uppercase; font-size:11px;">${s.status || "pending"}</span>
+          </div>`;
+      });
+      box.innerHTML = html;
+    });
+
+    // 3. Payment / Add-Credits History
+    db.collection("payments").where("userId", "==", currentUser.uid).onSnapshot((snap) => {
+      const box = document.getElementById("profPayHistory");
+      if (snap.empty) {
+        box.innerHTML = "Abhi tak koi payment request nahi hai.";
+        return;
+      }
+      let html = "";
+      snap.forEach((doc) => {
+        const p = doc.data();
+        const badgeColor = p.status === "approved" ? "#34d399" : (p.status === "rejected" ? "#f87171" : "#fbbf24");
+        html += `
+          <div style="padding:8px 0; border-bottom:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <b style="color:#e2e8f0;">₹${p.amount || 0} → ${(p.credits || 0).toLocaleString()} Credits</b><br>
+              <span style="font-size:11px; color:#94a3b8;">UTR: ${p.utr || "-"}</span>
+            </div>
+            <span style="color:${badgeColor}; font-weight:700; text-transform:uppercase; font-size:11px;">${p.status || "pending"}</span>
+          </div>`;
+      });
+      box.innerHTML = html;
+    });
+  }
+  // Tab Switcher
+  function switchTab(tabName, el) {
+    ["tasks", "store", "promote", "refer", "profile", "admin"].forEach((t) => {
+      document.getElementById(`tab-${t}`).classList.add("hidden");
+    });
+    document.getElementById(`tab-${tabName}`).classList.remove("hidden");
+
+    document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
+    el.classList.add("active");
+  }
+
+// Load Active Tasks (1 User = 1 Claim Lock, No WhatsApp Needed)
+  function loadTasks() {
+    if (!currentUser) return;
+	const isAdminUser = currentUser && currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    // User ki pichhli submissions load karein taaki duplicate claim lock rahe
+    db.collection("submissions").where("userId", "==", currentUser.uid).onSnapshot((subSnap) => {
+      const userSubs = {};
+      subSnap.forEach((doc) => {
+        const s = doc.data();
+        if (s.taskId) userSubs[s.taskId] = s.status || "pending";
+      });
+
+      db.collection("tasks").where("active", "==", true).onSnapshot((snap) => {
+        const box = document.getElementById("taskListContainer");
+        if (snap.empty) {
+          box.innerHTML = '<p style="font-size:13px; color:var(--muted);">Abhi koi naya task nahi hai.</p>';
+          return;
+        }
+        let html = "";
+        snap.forEach((doc) => {
+          const t = doc.data();
+          if (t.creatorId === currentUser.uid) return; // Don't show own task
+
+          const subStatus = userSubs[doc.id];
+          // Submit hone ke baad (pending ya approved) task main list se gayab ho jayega
+          if (subStatus === "pending" || subStatus === "approved") return;
+
+          html += `
+            <div class="task-item">
+			  ${isAdminUser ? `<button onclick="deleteAdminTask('${doc.id}')" style="background:#dc2626; color:#fff; border:none; padding:2px 8px; border-radius:6px; font-size:11px; margin-left:6px; cursor:pointer;">🗑️ Delete (${doc.id.slice(0,5)})</button>` : ""}
+              <span class="task-tag">${t.platform}</span>
+              <span class="task-reward">+${t.reward} Pts</span>
+              <div class="task-desc">${t.description}</div>
+              <a href="${t.url}" target="_blank" style="color:#818cf8; font-size:12px; font-weight:700; text-decoration:none;">
+                ▶ Open Video & Complete Task
+              </a>
+              <input type="text" id="proof_${doc.id}" placeholder="Apna commented username / comment text likhen" style="margin-top:8px; padding:9px; font-size:12px;" />
+              <button class="btn btn-green btn-sm" onclick="submitTaskProof('${doc.id}', '${t.platform}', ${t.reward})">
+                Submit Proof & Claim Points
+              </button>
+            </div>
+          `;
+        });
+        box.innerHTML = html || '<p style="font-size:13px; color:var(--muted);">Abhi koi naya task nahi hai. Apne submitted tasks Profile tab mein dekhein.</p>';
+      });
+    });
+  }
+
+  // Submit Task Proof Directly In-App (No WhatsApp Redirect, Strict Duplicate Check)
+  async function submitTaskProof(taskId, platform, reward) {
+    const commentText = document.getElementById(`proof_${taskId}`).value.trim();
+    if (commentText.length < 3) return alert("Apna comment text ya username zaroor likhen.");
+
+    try {
+      // Database Double-Check (Ek user ek task sirf ek hi baar submit kar sake)
+      const dupCheck = await db.collection("submissions")
+        .where("userId", "==", currentUser.uid)
+        .where("taskId", "==", taskId)
+        .get();
+
+      const alreadyClaimed = dupCheck.docs.some((d) => d.data().status !== "rejected");
+      if (alreadyClaimed) {
+        return alert("Aap yeh task pehle hi submit kar chuke hain! Ek task sirf ek hi baar claim hota hai.");
+      }
+
+      await db.collection("submissions").add({
+        taskId,
+        userId: currentUser.uid,
+        userName: currentUserData.name,
+        userPhone: currentUserData.phone,
+        platform,
+        reward,
+        commentText,
+        status: "pending",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert("✅ Proof Submit Ho Gaya! WhatsApp par kuch bhejne ki zaroorat nahi hai—Admin verify karte hi points add ho jayenge.");
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+  // Store Cost Calculator
+  function calcStoreCost() {
+    const service = document.getElementById("storeService").value;
+    const qty = parseInt(document.getElementById("storeQty").value) || 0;
+    const wallet = document.getElementById("storeWallet") ? document.getElementById("storeWallet").value : "rewardPoints";
+    const cost = service === "views" ? qty : (qty / 100) * 3000;
+
+    document.getElementById("storeCostPreview").innerText = Math.ceil(cost).toLocaleString();
+    const currLbl = document.getElementById("storeCurrencyLabel");
+    if (currLbl) {
+      currLbl.innerText = wallet === "paidCredits" ? "Paid Ad Credits" : "Reward Points";
+      currLbl.style.color = wallet === "paidCredits" ? "#fbbf24" : "#34d399";
+    }
+  }
+
+  // Place Store Order
+  async function placeStoreOrder() {
+    const service = document.getElementById("storeService").value;
+    const qty = parseInt(document.getElementById("storeQty").value) || 0;
+    const link = document.getElementById("storeLink").value.trim();
+    const walletType = document.getElementById("storeWallet") ? document.getElementById("storeWallet").value : "rewardPoints";
+
+    if (service === "views" && qty < 500) return alert("Minimum 500 views order karein.");
+    if (service === "likes" && qty < 100) return alert("Minimum 100 likes order karein.");
+    if (!link) return alert("Instagram link paste karein.");
+
+    const cost = Math.ceil(service === "views" ? qty : (qty / 100) * 3000);
+    const userBal = walletType === "paidCredits" ? (currentUserData.paidCredits || 0) : (currentUserData.rewardPoints || 0);
+
+    if (userBal < cost) {
+      return alert(walletType === "paidCredits"
+        ? `Insufficient Paid Ad Credits! Is order ke liye ${cost.toLocaleString()} Credits chahiye (Promote tab se buy karein).`
+        : `Insufficient Reward Points! Pehle tasks poore karke points kamayein.`);
+    }
+
+    await db.collection("users").doc(currentUser.uid).update({
+      [walletType]: firebase.firestore.FieldValue.increment(-cost)
+    });
+
+    await db.collection("orders").add({
+      userId: currentUser.uid,
+      userName: currentUserData.name,
+      service,
+      qty,
+      cost,
+      walletType,
+      link,
+      status: "pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    alert("✅ Order placed! 1-12 ghante mein aapke Instagram link par deliver ho jayega.");
+  }
+
+  function loadMyOrders() {
+    db.collection("orders").where("userId", "==", currentUser.uid).onSnapshot((snap) => {
+      const box = document.getElementById("myOrdersList");
+      if (snap.empty) return;
+      let html = "";
+      snap.forEach((doc) => {
+        const o = doc.data();
+        const st = (o.status || "pending").toLowerCase();
+        let stColor = "#fbbf24"; // Yellow (Pending)
+        let stLabel = "PENDING";
+
+        if (st === "processing") {
+          stColor = "#60a5fa"; // Blue (Processing)
+          stLabel = "⏳ PROCESSING";
+        } else if (st === "completed") {
+          stColor = "#34d399"; // Green (Completed)
+          stLabel = "✅ COMPLETED";
+        } else if (st === "rejected") {
+          stColor = "#f87171"; // Red (Rejected + Refunded)
+          stLabel = "❌ REJECTED (POINTS REFUNDED)";
+        }
+
+        html += `<div style="padding:8px 0; border-bottom:1px solid var(--border);">
+          <b>${o.qty} ${o.service.toUpperCase()}</b> • Status: <span style="color:${stColor}; font-weight:700;">${stLabel}</span>
+        </div>`;
+      });
+      box.innerHTML = html;
+    });
+  }
+
+  // Create Paid Task (Only Paid Ad Credits allowed)
+  async function createPaidTask() {
+    const platform = document.getElementById("newTaskPlatform").value;
+    const url = document.getElementById("newTaskUrl").value.trim();
+    const description = document.getElementById("newTaskDesc").value.trim();
+    const reward = parseInt(document.getElementById("newTaskReward").value) || 0;
+    const count = parseInt(document.getElementById("newTaskCount").value) || 0;
+
+    if (!url || reward < 1000 || count < 1) return alert("Sahi link aur minimum 1,000 points per user dalein.");
+    const totalCost = reward * count;
+
+    if ((currentUserData.paidCredits || 0) < totalCost) {
+      return alert(`Aapko ${totalCost.toLocaleString()} Paid Ad Credits chahiye. Niche ₹50 UPI se credits buy karein.`);
+    }
+
+    await db.collection("users").doc(currentUser.uid).update({
+      paidCredits: firebase.firestore.FieldValue.increment(-totalCost)
+    });
+
+    await db.collection("tasks").add({
+        creatorId: currentUser.uid,
+        creatorName: currentUserData.name,
+        platform,
+        url,
+        description,
+        reward,
+        count,
+        totalCost,
+        active: false,
+        status: "pending_approval",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert("✅ Campaign Submit Ho Gaya! Admin link check karke 1-2 ghante mein live kar denge.");
+  }
+
+  // Submit UPI Payment Request
+  async function submitPaymentRequest() {
+    const amount = parseInt(document.getElementById("buyAmount").value) || 0;
+    const utr = document.getElementById("buyUtr").value.trim();
+    if (amount < 50 || utr.length < 6) return alert("Minimum ₹50 aur valid UTR number dalein.");
+
+    const credits = amount * 1000; // ₹50 = 50,000 credits
+    await db.collection("payments").add({
+      userId: currentUser.uid,
+      userName: currentUserData.name,
+      amount,
+      credits,
+      utr,
+      status: "pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    alert("Payment request submitted! Admin verify karte hi Paid Ad Credits add ho jayenge.");
+  }
+
+  // Copy Referral Link
+  function copyRefLink() {
+    const link = document.getElementById("myRefLink").innerText;
+    navigator.clipboard.writeText(link);
+    const msg = encodeURIComponent(`🔥 Free Instagram Reel Views & Likes!\nJoin karo aur 1,000 Free Points pao:\n${link}`);
+    window.open(`https://wa.me/?text=${msg}`, "_blank");
+  }
+
+  function loadReferralStats() {
+    db.collection("users").where("referredBy", "==", currentUser.uid).onSnapshot((snap) => {
+      document.getElementById("refTotalCount").innerText = snap.size;
+      let verified = 0;
+      snap.forEach((d) => {
+        if ((d.data().streak || 0) >= 7) verified++;
+      });
+      document.getElementById("refVerifiedCount").innerText = verified;
+    });
+  }
+
+  // ==========================================
+  // ADMIN FUNCTIONS
+  // ==========================================
+  async function postAdminTask() {
+    const platform = document.getElementById("admPlatform").value;
+    const url = document.getElementById("admUrl").value.trim();
+    const description = document.getElementById("admDesc").value.trim();
+    const reward = parseInt(document.getElementById("admReward").value) || 2000;
+    if (!url) return alert("URL dalein");
+
+    await db.collection("tasks").add({
+      creatorId: "ADMIN",
+      platform,
+      url,
+      description,
+      reward,
+      active: true,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert("Admin Task Published!");
+  }
+
+  function loadAdminData() {
+	// Total Users Live Count
+    db.collection("users").onSnapshot((snap) => {
+      document.getElementById("adminTotalUsers").innerText = snap.size;
+    });
+    db.collection("tasks").where("active", "==", true).onSnapshot((snap) => {
+      document.getElementById("adminActiveTasks").innerText = snap.size;
+    });
+	// 0. Pending User Campaigns (Ad Moderation)
+    db.collection("tasks").where("status", "==", "pending_approval").onSnapshot((snap) => {
+      const box = document.getElementById("adminPendingCampaigns");
+      if (!box) return;
+      if (snap.empty) return (box.innerHTML = "No pending user campaigns.");
+      let html = "";
+      snap.forEach((doc) => {
+        const t = doc.data();
+        const refundAmt = t.totalCost || (t.reward * t.count) || 0;
+        html += `
+          <div style="padding:10px 0; border-bottom:1px solid var(--border);">
+            <b>${t.creatorName || "User"}</b> • ${t.platform} (+${t.reward} Pts × ${t.count})<br>
+            <span style="color:#94a3b8; font-size:11px;">${t.description}</span><br>
+            <a href="${t.url}" target="_blank" style="color:#818cf8; display:inline-block; margin:4px 0 8px 0;">🔗 Check Video Link</a>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-green btn-sm" style="flex:1;" onclick="approveUserCampaign('${doc.id}')">✅ Approve Live</button>
+              <button class="btn btn-sm" style="background:#dc2626; color:#fff; flex:1;" onclick="rejectUserCampaign('${doc.id}', '${t.creatorId}', ${refundAmt})">❌ Reject & Refund</button>
+            </div>
+          </div>`;
+      });
+      box.innerHTML = html;
+    });
+    // 1. Pending Submissions
+    db.collection("submissions").where("status", "==", "pending").onSnapshot((snap) => {
+      const box = document.getElementById("adminPendingTasks");
+      if (snap.empty) return (box.innerHTML = "No pending tasks.");
+      let html = "";
+      snap.forEach((doc) => {
+        const s = doc.data();
+        html += `<div style="padding:8px 0; border-bottom:1px solid var(--border);">
+          <b>${s.userName}</b> (${s.platform}) • +${s.reward} Pts<br>
+          Comment: <i>"${s.commentText}"</i><br>
+          <button class="btn btn-green btn-sm" onclick="approveTask('${doc.id}', '${s.userId}', ${s.reward})">Approve & Credit</button>
+        </div>`;
+      });
+      box.innerHTML = html;
+    });
+
+    // 2. Pending Payments
+    db.collection("payments").where("status", "==", "pending").onSnapshot((snap) => {
+      const box = document.getElementById("adminPendingPayments");
+      if (snap.empty) return (box.innerHTML = "No pending payments.");
+      let html = "";
+      snap.forEach((doc) => {
+        const p = doc.data();
+        html += `<div style="padding:8px 0; border-bottom:1px solid var(--border);">
+          <b>${p.userName}</b> • ₹${p.amount} (${p.credits} Credits)<br>
+          UTR: <b>${p.utr}</b><br>
+          <button class="btn btn-gold btn-sm" onclick="approvePayment('${doc.id}', '${p.userId}', ${p.credits})">Approve Payment</button>
+        </div>`;
+      });
+      box.innerHTML = html;
+    });
+
+    // 3. Pending & Processing Boost Orders
+    db.collection("orders").where("status", "in", ["pending", "processing"]).onSnapshot((snap) => {
+      const box = document.getElementById("adminPendingOrders");
+      if (snap.empty) return (box.innerHTML = "No pending orders.");
+      let html = "";
+      snap.forEach((doc) => {
+        const o = doc.data();
+        const isProc = o.status === "processing";
+        const statusBadge = isProc
+          ? `<span style="background:#1e3a8a; color:#93c5fd; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700;">⏳ PROCESSING</span>`
+          : `<span style="background:#78350f; color:#fcd34d; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700;">🟡 NEW PENDING</span>`;
+
+        html += `
+          <div style="padding:10px 0; border-bottom:1px solid var(--border);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <b>${o.userName}: ${o.qty} ${o.service.toUpperCase()}</b>
+              ${statusBadge}
+            </div>
+            <a href="${o.link}" target="_blank" style="color:#818cf8; display:inline-block; margin:4px 0 8px 0;">🔗 Open IG Link</a>
+            <div style="display:flex; gap:6px;">
+              ${!isProc ? `<button class="btn btn-sm" style="background:#2563eb; color:#fff; flex:1;" onclick="processOrder('${doc.id}')">⏳ Process</button>` : ""}
+              <button class="btn btn-green btn-sm" style="flex:1;" onclick="completeOrder('${doc.id}')">✅ Complete</button>
+              <button class="btn btn-sm" style="background:#dc2626; color:#fff; flex:1;" onclick="rejectOrder('${doc.id}', '${o.userId}', ${o.cost || 0}, '${o.walletType || "rewardPoints"}')">❌ Reject</button>
+            </div>
+          </div>`;
+      });
+      box.innerHTML = html;
+    });
+  }
+
+  // Smart Approve Logic (Handles Joining Bonus, 7-Day Streak, & Two-Step Referral Bonus)
+  async function approveTask(subId, userId, reward) {
+    const userRef = db.collection("users").doc(userId);
+    const userSnap = await userRef.get();
+    const u = userSnap.data();
+
+   let totalAdd = reward;
+    const todayStr = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+    const lastDate = u.lastStreakDate || "";
+    let newStreak = u.streak || 0;
+    const updates = {};
+
+    // Streak din mein sirf 1 baar badhega (aaj ki date par)
+    if (lastDate !== todayStr) {
+      newStreak += 1;
+      updates.streak = newStreak;
+      updates.lastStreakDate = todayStr;
+
+      // 2. 7-Day Streak Bonus (+10,000 Pts)
+      if (newStreak % 7 === 0) {
+        totalAdd += 10000;
+      }
+    }
+
+    // 1. Joining Bonus (1,000 Pts on 1st Task)
+    if (!u.joiningBonusPaid) {
+      totalAdd += 1000;
+      updates.joiningBonusPaid = true;
+    }
+
+    updates.rewardPoints = firebase.firestore.FieldValue.increment(totalAdd);
+    await userRef.update(updates);
+
+    // 3. Referral Bonuses to Referrer
+    if (u.referredBy) {
+      const refUserRef = db.collection("users").doc(u.referredBy);
+      if (!u.ref1kPaid) {
+        await refUserRef.update({ rewardPoints: firebase.firestore.FieldValue.increment(1000) });
+        await userRef.update({ ref1kPaid: true });
+      }
+      if (newStreak >= 7 && !u.ref49kPaid) {
+        await refUserRef.update({ rewardPoints: firebase.firestore.FieldValue.increment(49000) });
+        await userRef.update({ ref49kPaid: true });
+      }
+    }
+
+    await db.collection("submissions").doc(subId).update({ status: "approved" });
+    alert("Approved! Points & bonuses automatically credited.");
+  }
+
+  async function approvePayment(payId, userId, credits) {
+    await db.collection("users").doc(userId).update({
+      paidCredits: firebase.firestore.FieldValue.increment(credits)
+    });
+    await db.collection("payments").doc(payId).update({ status: "approved" });
+    alert("Paid Ad Credits added!");
+  }
+
+  async function processOrder(orderId) {
+    await db.collection("orders").doc(orderId).update({ status: "processing" });
+    alert("Order marked as PROCESSING! User ko bhi live status dikh jayega.");
+  }
+
+  async function completeOrder(orderId) {
+    await db.collection("orders").doc(orderId).update({ status: "completed" });
+    alert("✅ Order marked as COMPLETED!");
+  }
+
+  async function rejectOrder(orderId, userId, cost, walletType) {
+    if (!confirm("Kya aap is order ko Reject karke user ke points refund karna chahte hain?")) return;
+    try {
+      await db.collection("orders").doc(orderId).update({ status: "rejected" });
+      if (userId && cost > 0) {
+        const field = walletType === "paidCredits" ? "paidCredits" : "rewardPoints";
+        await db.collection("users").doc(userId).update({
+          [field]: firebase.firestore.FieldValue.increment(cost)
+        });
+      }
+      alert("❌ Order Rejected aur user ke points/credits refund kar diye gaye!");
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+  async function approveUserCampaign(taskId) {
+    await db.collection("tasks").doc(taskId).update({
+      active: true,
+      status: "approved"
+    });
+    alert("✅ Campaign Approved! Ab yeh sabhi users ko Available Tasks mein dikhega.");
+  }
+
+  async function rejectUserCampaign(taskId, creatorId, refundCredits) {
+    if (!confirm("Kya aap is campaign ko Reject karke user ke Paid Credits refund karna chahte hain?")) return;
+    try {
+      await db.collection("tasks").doc(taskId).update({
+        active: false,
+        status: "rejected"
+      });
+      if (creatorId && refundCredits > 0) {
+        await db.collection("users").doc(creatorId).update({
+          paidCredits: firebase.firestore.FieldValue.increment(refundCredits)
+        });
+      }
+      alert("❌ Campaign Rejected aur Paid Ad Credits refund kar diye gaye!");
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+  async function deleteAdminTask(taskId) {
+  if (!confirm("Kya aap is task ko permanently delete karna chahte hain?")) return;
+  await db.collection("tasks").doc(taskId).delete();
+  alert("🗑️ Task delete ho gaya!");
+}
+</script>
+</body>
+</html>
